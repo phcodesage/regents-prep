@@ -7,6 +7,9 @@ interface ClassSchedule {
   name: string;
   price: string;
   dates: { month: string; days: string }[];
+  link?: string;
+  coupon?: string;
+  offer?: string;
 }
 
 const classSchedules: ClassSchedule[] = [
@@ -18,6 +21,9 @@ const classSchedules: ClassSchedule[] = [
       { month: 'May', days: '3, 10, 17, 24' },
       { month: 'June', days: '7, 15, 16' },
     ],
+    link: 'https://buy.stripe.com/5kQeV6aOo47U0hzboLdfG0e',
+    coupon: 'EARLYBIRD1 (Valid until March 15)',
+    offer: '$100 off + exam practice day + 2 bootcamps free ($299 value)',
   },
   {
     name: 'Algebra 2 / Trig',
@@ -28,6 +34,8 @@ const classSchedules: ClassSchedule[] = [
       { month: 'May', days: '3, 10, 17, 24' },
       { month: 'June', days: '7, 8, 9' },
     ],
+    link: 'https://buy.stripe.com/00w28k2hS33Qd4lakHdfG0f',
+    coupon: 'EARLYBIRD2',
   },
   {
     name: 'Geometry',
@@ -65,6 +73,8 @@ const classSchedules: ClassSchedule[] = [
       { month: 'May', days: '19, 26' },
       { month: 'June', days: '2, 9, 14, 15, 16' },
     ],
+    link: 'https://buy.stripe.com/eVq5kw2hS7k6fct64rdfG0g',
+    coupon: 'EARLYBIRD3',
   },
   {
     name: 'Earth Science',
@@ -128,7 +138,10 @@ function App() {
               Comprehensive curriculum, proven results, and dedicated support.
             </p>
             <div className="flex flex-wrap gap-4 justify-center md:justify-start">
-              <button className="bg-primary hover:bg-red-700 text-white px-8 py-4 rounded-lg font-bold text-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
+              <button
+                onClick={() => document.getElementById('courses')?.scrollIntoView({ behavior: 'smooth' })}
+                className="bg-primary hover:bg-red-700 text-white px-8 py-4 rounded-lg font-bold text-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
+              >
                 View All Courses
               </button>
             </div>
@@ -149,7 +162,7 @@ function App() {
         </div>
       </section>
 
-      <section className="py-16 px-6 bg-white">
+      <section id="courses" className="py-16 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-5xl font-bold font-serif text-dark mb-4">Our Courses</h2>
@@ -178,6 +191,34 @@ function App() {
                       </div>
                     </div>
                   ))}
+
+                  {(course.coupon || course.offer) && (
+                    <div className="mt-4 pt-4 border-t border-gray-100">
+                      {course.coupon && (
+                        <div className="text-sm font-semibold text-primary mb-1">
+                          Code: <span className="bg-primary/10 px-2 py-1 rounded">{course.coupon}</span>
+                        </div>
+                      )}
+                      {course.offer && (
+                        <div className="text-sm text-green-600 font-medium">
+                          {course.offer}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {course.link && (
+                    <div className="mt-6">
+                      <a
+                        href={course.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block w-full text-center bg-primary hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-300"
+                      >
+                        Register Now
+                      </a>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
