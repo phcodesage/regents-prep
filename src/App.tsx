@@ -55,6 +55,7 @@ const classSchedules: ClassSchedule[] = [
       { month: 'May', days: '5, 6, 12, 13, 19, 20, 27' },
       { month: 'June', days: '2, 3, 7, 8' },
     ],
+    link: 'https://buy.stripe.com/eVq00c6y8dIu4xPgJ5dfG0h',
   },
   {
     name: 'Physics',
