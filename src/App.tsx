@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Lenis from 'lenis';
 import { BookOpen, Calendar, CheckCircle, GraduationCap, Star, Award } from 'lucide-react';
 import heroImage from './sat-img.png';
@@ -91,12 +91,15 @@ const inclusions = [
   'Notes Materials',
   'Comprehensive Worksheets',
   '2 FREE Review Sessions',
-  'Exam Practice Day',
+  'Practice Exam Day - June 7',
+  'FREE Bootcamp Inclusion - June 8 and 9 (for registered students)',
   'Expert Instructors',
   'Small Class Sizes',
 ];
 
 function App() {
+  const [showBootcampInfo, setShowBootcampInfo] = useState(false);
+
   useEffect(() => {
     const lenis = new Lenis();
 
@@ -112,14 +115,34 @@ function App() {
     };
   }, []);
 
+  const handleBootcampToggle = () => {
+    setShowBootcampInfo((prev) => {
+      const next = !prev;
+
+      if (!prev) {
+        requestAnimationFrame(() => {
+          document.getElementById('bootcamp-info')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+      }
+
+      return next;
+    });
+  };
+
   return (
     <div className="min-h-screen bg-white font-sans">
       <nav className="bg-dark text-white py-4 px-6 sticky top-0 z-50 shadow-lg">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
+        <div className="max-w-7xl mx-auto flex justify-between items-center gap-4">
           <div className="flex items-center gap-2">
             <GraduationCap size={32} className="text-primary" />
             <span className="text-2xl font-bold font-serif">Regents Prep 2026</span>
           </div>
+          <button
+            onClick={handleBootcampToggle}
+            className="bg-primary hover:bg-red-700 text-white px-5 py-2 rounded-lg font-bold text-sm md:text-base transition-colors duration-300 whitespace-nowrap"
+          >
+            CHECK OUR BOOTCAMPS
+          </button>
         </div>
       </nav>
 
@@ -146,6 +169,21 @@ function App() {
                 View All Courses
               </button>
             </div>
+            {showBootcampInfo && (
+              <div
+                id="bootcamp-info"
+                className="mt-6 bg-white border-2 border-primary/20 rounded-xl p-6 shadow-lg text-left"
+              >
+                <p className="text-sm uppercase tracking-wide font-bold text-primary mb-2">Featured Offer</p>
+                <h3 className="text-2xl font-bold font-serif text-dark">REGENTS BOOTCAMP</h3>
+                <p className="text-lg text-dark/80 mt-2">June 8 and 9 Bootcamps</p>
+                <p className="text-3xl font-bold text-primary mt-3">$199</p>
+                <ul className="mt-4 space-y-2 text-dark/80 text-lg list-disc list-inside">
+                  <li>3 hours session</li>
+                  <li>With free practice exam</li>
+                </ul>
+              </div>
+            )}
           </div>
           <div className="flex justify-center md:justify-end">
             <div className="relative w-full max-w-md aspect-square">
